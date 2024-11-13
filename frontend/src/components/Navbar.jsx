@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 // react-logos 
 import { HiMiniBars3CenterLeft } from "react-icons/hi2";
@@ -9,8 +9,17 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 //image assets
 import avatarImg from "../assets/avatar.png"
 
+const navigation = [
+    {name: "Dashboard", href:"/dashboard"},
+    {name: "Orders", href:"/orders"},
+    {name: "Cart Page", href:"/cart"},
+    {name: "Check Out", href:"/checkout"},
+
+]
 
 function Navbar() {
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);console.log(isDropdownOpen);
 
     const  currentUser = true;
 
@@ -35,9 +44,29 @@ function Navbar() {
                 <div>
                     {
                         currentUser ? 
-                            <button>
-                                <img src={avatarImg} alt="" />
+                        <>
+                            <button onClick={()=> setIsDropdownOpen(!isDropdownOpen)}>
+                                <img src={avatarImg} alt="" className={`size-7 rounded-full ${currentUser ? 'ring-2 ring-blue-500': ''}`}/>
                             </button>
+                            {/* show dropdowns */}
+                            {
+                                isDropdownOpen && (
+                                    <div className='absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-40'>
+                                        <ul className='py-2'>
+                                            {
+                                                navigation.map((item) => (
+                                                    <li key={item.name} onClick={() => setIsDropdownOpen(false)}>
+                                                        <Link to={item.href} className='block px-4 py-2 text-sm hover:bg-gray-100'>
+                                                            {item.name}
+                                                        </Link>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    </div>
+                                )
+                            }
+                        </>
                         : 
                             <Link to="/login">
                                 <HiOutlineUser className='size-6'/>
