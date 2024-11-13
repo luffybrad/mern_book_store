@@ -1,19 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-{/* react-logos */}
+// react-logos 
 import { HiMiniBars3CenterLeft } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi2";
 import { HiOutlineHeart } from "react-icons/hi";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-
+//image assets
+import avatarImg from "../assets/avatar.png"
 
 
 function Navbar() {
+
+    const  currentUser = true;
+
   return (
     <header className="max-w-screen-2xl nx-auto px-4 py-6">
         <nav className='flex justify-between items-center'>
             {/* left side */}
+            
             <div className='flex items-center md:gap-16 gap-4'>
                 <Link to="/">
                     <HiMiniBars3CenterLeft className='size-6' />
@@ -27,13 +32,24 @@ function Navbar() {
             </div>
             {/* right side */}
             <div className='relative flex items-center md:space-x-2 space-x-2'>
-                <HiOutlineUser className='size-6'/>
+                <div>
+                    {
+                        currentUser ? 
+                            <button>
+                                <img src={avatarImg} alt="" />
+                            </button>
+                        : 
+                            <Link to="/login">
+                                <HiOutlineUser className='size-6'/>
+                            </Link>
+                    }
+                </div>
                 <button className='hidden sm:block'>
                     <HiOutlineHeart className='size-6'/>
                 </button>
-                <Link to="/cart" className='bg-primary p-1 sm:px-6 py-2 flex items-center rounded-sm'>
+                <Link to="/cart" className='bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm'>
                     <HiOutlineShoppingCart  className=''/>
-                    <span>0</span>
+                    <span className='text-sm font-semibold sm:ml-1'>0</span>
                 </Link>
             </div>
         </nav>
